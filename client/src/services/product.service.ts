@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { UpdateProduct } from '../store/asyncAction/product.action'
 import { BASE_URL, actionByID } from '../utils/axios'
 
 export const getAllProduct = () => {
@@ -15,4 +16,8 @@ export const deleteProduct = (id: string | undefined) => {
 
 export const getProductByID = (id: string) => {
 	return axios.get(actionByID(id))
+}
+
+export const editProduct = (data: UpdateProduct) => {
+	return axios.patch(BASE_URL + `product/${data._id}`, data)
 }

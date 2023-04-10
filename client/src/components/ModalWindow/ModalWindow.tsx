@@ -43,10 +43,11 @@ export const ModalWindow: FC<Props> = ({ isOpen, onClose }) => {
 	const dispatch = useAppDispatch()
 	const createNewProduct = async () => {
 		if (
-			!data.count &&
-			!data.imageUrl &&
-			!data.size.height &&
-			!data.size.width &&
+			!data.name ||
+			!data.count ||
+			!data.imageUrl ||
+			!data.size.height ||
+			!data.size.width ||
 			!data.weight
 		) {
 			toast({

@@ -12,11 +12,12 @@ import {
 	ModalHeader,
 	ModalOverlay,
 	Text,
+	useToast,
 } from '@chakra-ui/react'
 import { FC, useState } from 'react'
+import { FetchEditProduct } from '../../store/asyncAction/product.action'
 import { useAppDispatch, useAppSelector } from '../../store/hooks/redux.hook'
 import { selectedProductByID } from '../../store/selectors/product.selector'
-import { ProductAction } from '../../store/slices/product.slice'
 
 type Props = {
 	isOpen: boolean
@@ -26,25 +27,47 @@ type Props = {
 
 export const ModalWindowForEdit: FC<Props> = ({ isOpen, onClose, id }) => {
 	const productById = useAppSelector(selectedProductByID(id))
+
 	const dispatch = useAppDispatch()
+
+	const toast = useToast({
+		position: 'top',
+	})
+
 	const [data, setData] = useState({
 		name: productById?.name,
 		imageUrl: productById?.imageUrl,
 		count: productById?.count,
 		size: {
-			width: productById?.size.width,
-			height: productById?.size.height,
+			width: productById?.size.width!,
+			height: productById?.size.height!,
 		},
 		weight: productById?.weight,
 	})
 
 	const editProduct = () => {
 		const updateProduct = {
-			_id: productById?._id,
+			_id: productById?._id!,
 			...data,
 		}
-		dispatch(ProductAction.editProduct(updateProduct))
-		onClose()
+		if (
+			!updateProduct.name ||
+			!updateProduct.count ||
+			!updateProduct.imageUrl ||
+			!updateProduct.size.height ||
+			!updateProduct.size.width ||
+			!updateProduct.weight
+		) {
+			toast({
+				description: 'Empty field',
+				status: 'error',
+				duration: 4000,
+				isClosable: true,
+			})
+		} else {
+			dispatch(FetchEditProduct(updateProduct))
+			onClose()
+		}
 	}
 
 	return (

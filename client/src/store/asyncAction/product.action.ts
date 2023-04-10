@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import {
 	createNewProduct,
 	deleteProduct,
+	editProduct,
 	getAllProduct,
 } from '../../services/product.service'
 import { ProductAction } from '../slices/product.slice'
@@ -44,7 +45,24 @@ export const FetchRemoveProduct = createAsyncThunk(
 	}
 )
 
+export interface UpdateProduct {
+	_id: string
+	name: string | undefined
+	imageUrl: string | undefined
+	count: number | undefined
+	size: {
+		width: number
+		height: number
+	}
+	weight: string | undefined
+}
+
 export const FetchEditProduct = createAsyncThunk(
 	'product/editProduct',
-	async (params: any) => {}
+	async (data: UpdateProduct, { dispatch }) => {
+		dispatch(ProductAction.editProduct(data))
+		const res = await editProduct(data)
+
+		return res
+	}
 )
