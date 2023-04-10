@@ -7,12 +7,5 @@ export interface Product {
 		width: number
 		height: number
 	}
-	weight: string
-	comments: Comments[]
-}
-
-export interface Comments {
-	id: string
-	productId: string
-	description: string
+	weight?: string
 }

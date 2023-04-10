@@ -27,6 +27,7 @@ const ProductSlice = createSlice({
 			const index = state.products.findIndex(
 				element => element._id === action.payload._id
 			)
+
 			state.products[index] = action.payload
 		},
 
@@ -47,24 +48,6 @@ const ProductSlice = createSlice({
 					return b.count - a.count
 				})
 			}
-		},
-		addComments(state, action) {
-			const findProduct = state.products.find(
-				product => product._id === action.payload.productId
-			)
-			findProduct?.comments.push(action.payload)
-		},
-		deleteComments(state, action) {
-			const findProduct = state.products.find(
-				product => product._id === action.payload.productId
-			)
-
-			findProduct?.comments.splice(
-				findProduct?.comments.findIndex(
-					element => element.id === action.payload._id
-				),
-				1
-			)
 		},
 	},
 
