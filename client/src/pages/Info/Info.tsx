@@ -5,7 +5,6 @@ import {
 	Flex,
 	Heading,
 	Image,
-	Input,
 	Text,
 	useDisclosure,
 } from '@chakra-ui/react'
@@ -110,45 +109,7 @@ export const Info = () => {
 					</Button>
 				</Box>
 			</Flex>
-			<Text
-				pt={8}
-				pb={4}
-				color='#696969'
-				textTransform='uppercase'
-				fontSize='25px'
-				fontWeight='500'
-			>
-				Comments:
-			</Text>
-			{productById?.comments.map((comment: Comments) => (
-				<Box
-					display='flex'
-					pb={4}
-					justifyContent='space-between'
-					w={'220px'}
-					key={comment.id}
-				>
-					<Text ml={2} display='flex' alignItems='center'>
-						{comment.description}
-					</Text>
-					<Button variant='primary' onClick={() => removeComment(comment)}>
-						X
-					</Button>
-				</Box>
-			))}
-			<Box display='flex' pb={10}>
-				<Input
-					w='50%'
-					onChange={e => setComment(e.target.value)}
-					variant='primary'
-					value={comment}
-					placeholder='Comment'
-					type='text'
-				/>
-				<Button onClick={createComments} variant='primary'>
-					Add Comments
-				</Button>
-			</Box>
+
 			<Alert
 				isOpen={modal1.isOpen}
 				onClose={modal1.onClose}

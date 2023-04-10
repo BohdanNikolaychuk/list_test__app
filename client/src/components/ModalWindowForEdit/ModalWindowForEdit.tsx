@@ -44,7 +44,7 @@ export const ModalWindowForEdit: FC<Props> = ({ isOpen, onClose, id }) => {
 			...data,
 		}
 		dispatch(ProductAction.editProduct(updateProduct))
-		console.log(updateProduct)
+		onClose()
 	}
 
 	return (
