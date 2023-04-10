@@ -5,21 +5,25 @@ import {
 	Flex,
 	Heading,
 	Image,
-	Stack,
-	StackDivider,
+	Input,
 	Text,
 	useDisclosure,
 } from '@chakra-ui/react'
+import { useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
-
+import { v4 as uuidv4 } from 'uuid'
+import { Comments } from '../../@types/product.type'
 import { Alert, ModalWindowForEdit } from '../../components'
 import { routes } from '../../router/routes'
 import { FetchRemoveProduct } from '../../store/asyncAction/product.action'
 import { useAppDispatch, useAppSelector } from '../../store/hooks/redux.hook'
 import { selectedProductByID } from '../../store/selectors/product.selector'
+import { ProductAction } from '../../store/slices/product.slice'
 
 export const Info = () => {
 	const { id } = useParams()
+
+	const [comment, setComment] = useState('')
 	const modal1 = useDisclosure()
 	const modal2 = useDisclosure()
 	const navigate = useNavigate()
@@ -33,12 +37,30 @@ export const Info = () => {
 		navigate(routes.main)
 	}
 
+	const createComments = () => {
+		const newComments: Comments = {
+			id: uuidv4(),
+			description: comment,
+			productId: productById?._id!,
+		}
+
+		dispatch(ProductAction.addComments(newComments))
+		setComment('')
+	}
+
+	const removeComment = (comment: Comments) => {
+		dispatch(ProductAction.deleteComments(comment))
+	}
+
 	return (
-		<Container minHeight='100vh' maxW={'1200px'}>
+		<Container maxW={'1200px'}>
 			<Button mt='5' mb='10' variant='primary' as={NavLink} to={routes.main}>
 				Back to Main
 			</Button>
-			<Flex>
+			<Flex
+				display={{ md: 'block', xl: 'flex' }}
+				justifyContent={{ xl: 'space-between' }}
+			>
 				<Image
 					mixBlendMode='multiply'
 					w='100%'
@@ -51,21 +73,35 @@ export const Info = () => {
 				<Box mt='4'>
 					<Heading color='#696969'>{productById?.name}</Heading>
 
-					<Stack divider={<StackDivider />} spacing='4'>
-						<Box>
-							<Text color='#696969' textTransform='uppercase' fontWeight='500'>
-								Count:{productById?.count}
-							</Text>
-							<Text color='#696969' textTransform='uppercase' fontWeight='500'>
-								width:{productById?.size.width} x height:
-								{productById?.size.height}
-							</Text>
+					<Box>
+						<Text
+							color='#696969'
+							textTransform='uppercase'
+							mb={2}
+							fontWeight='500'
+						>
+							Count:{productById?.count}
+						</Text>
+						<Text
+							mb={2}
+							color='#696969'
+							textTransform='uppercase'
+							fontWeight='500'
+						>
+							width:{productById?.size.width} x height:
+							{productById?.size.height}
+						</Text>
 
-							<Text color='#696969' textTransform='uppercase' fontWeight='500'>
-								Weight:{productById?.weight}g
-							</Text>
-						</Box>
-					</Stack>
+						<Text
+							mb={2}
+							color='#696969'
+							textTransform='uppercase'
+							fontWeight='500'
+						>
+							Weight:{productById?.weight}g
+						</Text>
+					</Box>
+
 					<Button onClick={modal1.onOpen} variant='primary' mt='10' p='6'>
 						<Text textTransform='uppercase'>Delete</Text>
 					</Button>
@@ -74,9 +110,45 @@ export const Info = () => {
 					</Button>
 				</Box>
 			</Flex>
-			<Text color='#696969' textTransform='uppercase' fontWeight='500'>
+			<Text
+				pt={8}
+				pb={4}
+				color='#696969'
+				textTransform='uppercase'
+				fontSize='25px'
+				fontWeight='500'
+			>
 				Comments:
 			</Text>
+			{productById?.comments.map((comment: Comments) => (
+				<Box
+					display='flex'
+					pb={4}
+					justifyContent='space-between'
+					w={'220px'}
+					key={comment.id}
+				>
+					<Text ml={2} display='flex' alignItems='center'>
+						{comment.description}
+					</Text>
+					<Button variant='primary' onClick={() => removeComment(comment)}>
+						X
+					</Button>
+				</Box>
+			))}
+			<Box display='flex' pb={10}>
+				<Input
+					w='50%'
+					onChange={e => setComment(e.target.value)}
+					variant='primary'
+					value={comment}
+					placeholder='Comment'
+					type='text'
+				/>
+				<Button onClick={createComments} variant='primary'>
+					Add Comments
+				</Button>
+			</Box>
 			<Alert
 				isOpen={modal1.isOpen}
 				onClose={modal1.onClose}

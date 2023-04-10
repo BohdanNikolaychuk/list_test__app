@@ -103,7 +103,9 @@ export const ModalWindowForEdit: FC<Props> = ({ isOpen, onClose, id }) => {
 						<FormControl id='size'>
 							<FormLabel>Product size</FormLabel>
 							<Flex>
-								<Text>width</Text>
+								<Text display='flex' alignItems='center'>
+									width
+								</Text>
 								<Input
 									variant='primary'
 									value={data.size.width}
@@ -120,7 +122,9 @@ export const ModalWindowForEdit: FC<Props> = ({ isOpen, onClose, id }) => {
 									}
 									m={2}
 								/>
-								<Text>height</Text>
+								<Text display='flex' alignItems='center'>
+									height
+								</Text>
 								<Input
 									m={2}
 									variant='primary'

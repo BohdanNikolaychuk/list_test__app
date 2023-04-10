@@ -8,5 +8,11 @@ export interface Product {
 		height: number
 	}
 	weight: string
-	comments: Array<string>
+	comments: Comments[]
+}
+
+export interface Comments {
+	id: string
+	productId: string
+	description: string
 }

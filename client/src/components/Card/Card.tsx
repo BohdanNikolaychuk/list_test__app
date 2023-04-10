@@ -14,6 +14,7 @@ export const Card: FC<Product> = props => {
 	return (
 		<Center py={12}>
 			<Box
+				cursor='pointer'
 				onClick={navigateToProduct}
 				role={'group'}
 				p={6}
@@ -21,7 +22,7 @@ export const Card: FC<Product> = props => {
 				rounded={'lg'}
 				pos={'relative'}
 				zIndex={1}
-				sx={{ maxWidth: 400, height: 530 }}
+				sx={{ maxWidth: 400, height: 400 }}
 			>
 				<Image
 					rounded={'lg'}
@@ -32,14 +33,14 @@ export const Card: FC<Product> = props => {
 				/>
 
 				<Stack>
-					<Heading fontSize={20} color={'#696969'} fontWeight={700}>
+					<Heading py={2} fontSize={20} color={'#696969'} fontWeight={700}>
 						{props.name}
 					</Heading>
 					<Heading fontSize={17} color={'#696969'} fontWeight={500}>
-						{props.count}
+						count: {props.count}
 					</Heading>
 					<Heading fontSize={17} color={'#696969'} fontWeight={500}>
-						width: {props.size.width} x height:{props.size.height}
+						width: {props.size.width} x height: {props.size.height}
 					</Heading>
 					<Heading fontSize={17} color={'#696969'} fontWeight={500}>
 						weight: {props.weight}

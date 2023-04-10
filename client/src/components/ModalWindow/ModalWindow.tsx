@@ -66,6 +66,7 @@ export const ModalWindow: FC<Props> = ({ isOpen, onClose }) => {
 						isClosable: true,
 					})
 					onClose()
+					setData(clearData)
 				})
 				.catch(error => {
 					toast({
@@ -107,6 +108,7 @@ export const ModalWindow: FC<Props> = ({ isOpen, onClose }) => {
 								variant='primary'
 								placeholder='Product image'
 								type='text'
+								value={data.imageUrl}
 								onChange={e =>
 									setData(prev => ({
 										...prev,
@@ -121,6 +123,7 @@ export const ModalWindow: FC<Props> = ({ isOpen, onClose }) => {
 								variant='primary'
 								placeholder='Product count'
 								type='number'
+								value={data.count}
 								onChange={e =>
 									setData(prev => ({
 										...prev,
@@ -132,11 +135,14 @@ export const ModalWindow: FC<Props> = ({ isOpen, onClose }) => {
 						<FormControl id='size'>
 							<FormLabel>Product size</FormLabel>
 							<Flex>
-								<Text>width</Text>
+								<Text display='flex' alignItems='center'>
+									width
+								</Text>
 								<Input
 									variant='primary'
 									placeholder='Product width'
 									type='number'
+									value={data.size.width}
 									onChange={e =>
 										setData(prev => ({
 											...prev,
@@ -148,12 +154,15 @@ export const ModalWindow: FC<Props> = ({ isOpen, onClose }) => {
 									}
 									m={2}
 								/>
-								<Text>height</Text>
+								<Text display='flex' alignItems='center'>
+									height
+								</Text>
 								<Input
 									m={2}
 									variant='primary'
 									placeholder='Product height'
 									type='number'
+									value={data.size.height}
 									onChange={e =>
 										setData(prev => ({
 											...prev,
@@ -170,6 +179,7 @@ export const ModalWindow: FC<Props> = ({ isOpen, onClose }) => {
 							<FormLabel>Product weight</FormLabel>
 							<Input
 								variant='primary'
+								value={data.weight}
 								placeholder='Product weight'
 								type='string'
 								onChange={e =>
