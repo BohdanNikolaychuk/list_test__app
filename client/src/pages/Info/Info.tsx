@@ -11,7 +11,7 @@ import {
 import { useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
-import { Comments } from '../../@types/product.type'
+
 import { Alert, ModalWindowForEdit } from '../../components'
 import { routes } from '../../router/routes'
 import { FetchRemoveProduct } from '../../store/asyncAction/product.action'
@@ -36,20 +36,7 @@ export const Info = () => {
 		navigate(routes.main)
 	}
 
-	const createComments = () => {
-		const newComments: Comments = {
-			id: uuidv4(),
-			description: comment,
-			productId: productById?._id!,
-		}
 
-		dispatch(ProductAction.addComments(newComments))
-		setComment('')
-	}
-
-	const removeComment = (comment: Comments) => {
-		dispatch(ProductAction.deleteComments(comment))
-	}
 
 	return (
 		<Container maxW={'1200px'}>
